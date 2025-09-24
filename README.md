@@ -15,8 +15,6 @@ arduino-cli compile --fqbn esp32:esp32:esp32doit-devkit-v1 .
 ```
 arduino-cli upload -p /dev/BOARD_HERE --fqbn esp32:esp32:esp32doit-devkit-v1 . 
 ```
-
-
 ## Open monitor 
 ```
 arduino-cli monitor -p /dev/BOARD_HERE -b esp32:esp32:esp32doit-devkit-v1
