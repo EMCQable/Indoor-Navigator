@@ -1,7 +1,7 @@
 #include "Blink.hpp"
 #include <Arduino.h>
 
-Blink::Blink(int pin, int interval) 
+Blink::Blink(const int pin, int interval) 
     : pin_(pin), interval_(interval), previousMillis_(0), ledState_(LOW) {
     pinMode(pin_, OUTPUT);
 }
