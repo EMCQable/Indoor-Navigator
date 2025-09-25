@@ -1,4 +1,3 @@
-
 class ProjectWiFi {
     public: 
         ProjectWiFi(const char * password, const char * ssid);
