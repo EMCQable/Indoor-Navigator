@@ -2,18 +2,18 @@
 #include "WifiConnection.hpp"
 #include "DRV8825Controller.hpp"
 
-const int dirPin1 = 2;
-const int dirPin2 = 32;
-const int dirPin3 = 33;
+// DO NOT USE PORTS 34-36,39 PORTS FOR OUTPUT
+constexpr int dirPin = 32;
+constexpr int stepPin = 33;
 
-const char* ssid = "";
+const char* ssid = "Stadinetti";
 const char* password = "";
 // For some reason only works with 9600 baudrate
 const short int serial_speed = 9600; 
 
 ProjectWiFi projectwifi(password, ssid);
 
-ProjectStepControl stepper(1,0,0,0,0,0,(int) dirPin2,0, (int) dirPin3);
+ProjectStepControl stepper(1,0,0,0,0,0,stepPin,0,dirPin);
 
 void setup() {
   Serial.begin(serial_speed);
@@ -34,4 +34,5 @@ void loop() {
   } else { 
     Serial.println("Disconnected.");
   }
+  stepper.TakeStep(false);
 } 
