@@ -34,11 +34,11 @@ void setup() {
 void loop() {
   // take a step
 
-  if (projectwifi.is_connected()) {
-    Serial.println("Connected!");
-  } else { 
-    Serial.println("Disconnected.");
-  }
+  //if (projectwifi.is_connected()) {
+  //  Serial.println("Connected!");
+  //} else { 
+  // Serial.println("Disconnected.");
+  //}
   stepper.TakeStep(false);
 
   imu.update();
