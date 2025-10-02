@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "WifiConnection.hpp"
 #include "DRV8825Controller.hpp"
+#include "MPU6050.hpp"
 
 // DO NOT USE PORTS 34-36,39 PORTS FOR OUTPUT
 constexpr int dirPin = 32;
@@ -15,6 +16,8 @@ ProjectWiFi projectwifi(password, ssid);
 
 ProjectStepControl stepper(1,0,0,0,0,0,stepPin,0,dirPin);
 
+MPU6050 imu;
+
 void setup() {
   Serial.begin(serial_speed);
   // wait until serial is open with USB
@@ -22,6 +25,8 @@ void setup() {
     delay(5);
   };
   Serial.println("Serial activated");
+
+  imu.initialize();
 
   bool ret = projectwifi.Connect_WiFi();
 }
@@ -35,4 +40,7 @@ void loop() {
     Serial.println("Disconnected.");
   }
   stepper.TakeStep(false);
+
+  imu.update();
+  delay(200);
 } 

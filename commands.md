@@ -11,6 +11,9 @@ arduino-cli core list
 arduino-cli board list
 arduino-cli board listall esp32
 
+## Monitor Serial
+arduino-cli monitor -p /dev/ttyUSB0 --baud 9600
+
 ## Compile and upload EPS32
 arduino-cli compile --fqbn esp32:esp32:esp32
 arduino-cli upload -p /dev/ttyUSB0 --fqbn esp32:esp32:esp32
