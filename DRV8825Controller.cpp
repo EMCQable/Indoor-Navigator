@@ -2,111 +2,111 @@
 #include <Arduino.h>
 #include <cassert>
 
-ProjectStepControl::ProjectStepControl( 
+DRV8825Controller::DRV8825Controller( 
         int turnratedenominator, int m1pin, int m2pin, int m3pin,
         int resetpin, int sleeppin, int steppin, int enablepin, int dirpin) : 
-    StepsPerRevolution(10), M1Pin(m1pin), M2Pin(m2pin), M3Pin(m3pin), ResetPin(resetpin),
-    SleepPin(sleeppin), StepPin(steppin), DirPin(dirpin) {
+    stepsPerRevolution_(10), m1Pin_(m1pin), mPin_(m2pin), m3Pin_(m3pin), resetPin_(resetpin),
+    sleepPin_(sleeppin), stepPin_(steppin), dirPin_(dirpin), enablePin_(enablepin) {
         // set output pins
-        if (M1Pin > 0) {
-            pinMode(M1Pin, OUTPUT);
+        if (m1Pin_ > 0) {
+            pinMode(m1Pin_, OUTPUT);
         }
 
-        if (M2Pin > 0) {
-            pinMode(M2Pin, OUTPUT);
+        if (mPin_ > 0) {
+            pinMode(mPin_, OUTPUT);
         }
 
-        if (M3Pin > 0) {
-            pinMode(M3Pin, OUTPUT);
+        if (m3Pin_ > 0) {
+            pinMode(m3Pin_, OUTPUT);
         }
 
-        if (ResetPin > 0) {
-            pinMode(ResetPin, OUTPUT);
+        if (resetPin_ > 0) {
+            pinMode(resetPin_, OUTPUT);
         }
 
-        if (SleepPin > 0) {
-            pinMode(SleepPin, OUTPUT);
+        if (sleepPin_ > 0) {
+            pinMode(sleepPin_, OUTPUT);
         }
 
-        assert(StepPin > 0);
-        assert(DirPin > 0);
+        assert(stepPin_ > 0);
+        assert(dirPin_ > 0);
 
-        pinMode(StepPin, OUTPUT);
-        pinMode(DirPin, OUTPUT);
+        pinMode(stepPin_, OUTPUT);
+        pinMode(dirPin_, OUTPUT);
         // set the correct rate
-        bool ret = SetStepMode(turnratedenominator);
+        bool ret = setStepMode(turnratedenominator);
 }
 
-bool ProjectStepControl::SetStepMode(int denominator) {
+bool DRV8825Controller::setStepMode(int denominator) {
         switch (denominator)
         {
             case 1:
-                if (M2Pin > 0){
-                    digitalWrite(M2Pin,LOW);
+                if (mPin_ > 0){
+                    digitalWrite(mPin_,LOW);
                 }
-                if (M3Pin > 0) {
-                    digitalWrite(M3Pin,LOW);
+                if (m3Pin_ > 0) {
+                    digitalWrite(m3Pin_,LOW);
                 }
-                if (M1Pin > 0){
-                    digitalWrite(M1Pin,LOW);
+                if (m1Pin_ > 0){
+                    digitalWrite(m1Pin_,LOW);
                 }
                 return true;
                 break;
             case 2:
-                if (M1Pin > 0){
-                    digitalWrite(M1Pin,HIGH);
+                if (m1Pin_ > 0){
+                    digitalWrite(m1Pin_,HIGH);
                 } else {
                     return false;
                 }
-                if (M2Pin > 0){
-                    digitalWrite(M2Pin,LOW);
+                if (mPin_ > 0){
+                    digitalWrite(mPin_,LOW);
                 }
-                if (M3Pin > 0) {
-                    digitalWrite(M3Pin,LOW);
+                if (m3Pin_ > 0) {
+                    digitalWrite(m3Pin_,LOW);
                 }
                 return true;
                 break;
             case 4:
-                if (M1Pin > 0) {
-                    digitalWrite(M1Pin,LOW);
+                if (m1Pin_ > 0) {
+                    digitalWrite(m1Pin_,LOW);
                 }
-                if (M2Pin > 0) {
-                    digitalWrite(M2Pin,HIGH);
+                if (mPin_ > 0) {
+                    digitalWrite(mPin_,HIGH);
                 } else {
                     return false;
                 }
-                if (M3Pin > 0) {
-                    digitalWrite(M3Pin,LOW);
+                if (m3Pin_ > 0) {
+                    digitalWrite(m3Pin_,LOW);
                 }
                 return true;
                 break;
             case 8:
-                if (M1Pin > 0) {
-                    digitalWrite(M1Pin,HIGH);
+                if (m1Pin_ > 0) {
+                    digitalWrite(m1Pin_,HIGH);
                 } else{
                     return false;
                 }
-                if (M2Pin > 0) {
-                    digitalWrite(M2Pin,HIGH);
+                if (mPin_ > 0) {
+                    digitalWrite(mPin_,HIGH);
                 } else {
                     return false;
                 }
-                if (M3Pin > 0) {
-                    digitalWrite(M3Pin,LOW);
+                if (m3Pin_ > 0) {
+                    digitalWrite(m3Pin_,LOW);
                 }
                 return true;
                 break;
             case 16:
-                if (M1Pin > 0) {
-                    digitalWrite(M1Pin,LOW);
+                if (m1Pin_ > 0) {
+                    digitalWrite(m1Pin_,LOW);
                 }
-                if (M2Pin > 0) {
-                    digitalWrite(M2Pin,LOW);
+                if (mPin_ > 0) {
+                    digitalWrite(mPin_,LOW);
                 } else {
                     return false;
                 }
-                if (M3Pin > 0) {
-                    digitalWrite(M3Pin,HIGH);
+                if (m3Pin_ > 0) {
+                    digitalWrite(m3Pin_,HIGH);
                 } else {
                     return false;
                 }
@@ -115,16 +115,16 @@ bool ProjectStepControl::SetStepMode(int denominator) {
             case 32:
                 // TODO: there could be better if loop to go through all possibilities
                 // for example, M1 HIGH, M2 HIGH and M3 HIGH
-                if (M1Pin > 0) {
-                    digitalWrite(M1Pin,HIGH);
+                if (m1Pin_ > 0) {
+                    digitalWrite(m1Pin_,HIGH);
                 } else {
                     return false;
                 }
-                if (M2Pin > 0) {
-                    digitalWrite(M2Pin,LOW);
+                if (mPin_ > 0) {
+                    digitalWrite(mPin_,LOW);
                 } 
-                if (M3Pin > 0) {
-                    digitalWrite(M3Pin,HIGH);
+                if (m3Pin_ > 0) {
+                    digitalWrite(m3Pin_,HIGH);
                 } else {
                     return false;
                 }
@@ -137,7 +137,7 @@ bool ProjectStepControl::SetStepMode(int denominator) {
         return false;
 }
 
-bool ProjectStepControl::TogglePin(int pin_num) {
+bool DRV8825Controller::togglePin(int pin_num) {
     if (pin_num > 0 ) {
         // TODO: double check that this is okay? 
         int state = digitalRead(pin_num);
@@ -152,38 +152,38 @@ bool ProjectStepControl::TogglePin(int pin_num) {
     }
 }
 
-bool ProjectStepControl::ToggleReset() {
-    return TogglePin(ResetPin);
+bool DRV8825Controller::toggleReset() {
+    return togglePin(resetPin_);
 }
 
-bool ProjectStepControl::ToggleSleep() {
-    return TogglePin(SleepPin);
+bool DRV8825Controller::toggleSleep() {
+    return togglePin(sleepPin_);
 }
 
-bool ProjectStepControl::ToggleEnable() {
-    return TogglePin(EnablePin);
+bool DRV8825Controller::toggleEnable() {
+    return togglePin(enablePin_);
 }
 
 // if direction is true or 1 or HIGH, clockwise direction
 // if direction is false or 0 or LOW, counter clockwise direction
-void ProjectStepControl::TakeStep(bool direction) {
+void DRV8825Controller::takeStep(bool direction) {
     if (direction) {
-        digitalWrite(DirPin,HIGH);
+        digitalWrite(dirPin_,HIGH);
     } else {
-        digitalWrite(DirPin,LOW);
+        digitalWrite(dirPin_,LOW);
     }
     // TODO: simple for loop taken from tutorial
     // needs to be better
-    for (int x = 0; x < StepsPerRevolution; x++) {
-        digitalWrite(StepPin,HIGH);
+    for (int x = 0; x < stepsPerRevolution_; x++) {
+        digitalWrite(stepPin_,HIGH);
         delay(20);
-        digitalWrite(StepPin,LOW);
+        digitalWrite(stepPin_,LOW);
     }
 }
 
-bool ProjectStepControl::SetStepsPerRevolution(int new_StepsPerRevolution) {
+bool DRV8825Controller::setStepsPerRevolution(int new_StepsPerRevolution) {
     if (new_StepsPerRevolution > 0) {
-        StepsPerRevolution = new_StepsPerRevolution;
+        stepsPerRevolution_ = new_StepsPerRevolution;
         return true;
     } else {
         return false;

@@ -1,29 +1,32 @@
-class ProjectStepControl {
+class DRV8825Controller {
     /*
     * A class controlling DRV8825 Controller Circuit 
     */
     public:
-        ProjectStepControl(int turnratedenominator, int m1pin, int m2pin, int m3pin, 
+        DRV8825Controller(int turnratedenominator, int m1pin, int m2pin, int m3pin, 
             int resetpin, int sleeppin, int steppin, int enablepin, int dirpin);
-        bool SetStepsPerRevolution(int new_StepsPerRevolution);
-        bool SetStepMode(int denominator);
-        bool ToggleReset();
-        bool ToggleSleep();
-        bool ToggleEnable();
-        void TakeStep(bool direction);
+        bool setStepsPerRevolution(int new_StepsPerRevolution);
+        bool setStepMode(int denominator);
+        bool toggleReset();
+        bool toggleSleep();
+        bool toggleEnable();
+        void takeStep(bool direction);
 
     private:
+        bool togglePin(int pin_number);
+        
         // TODO: the memory consumption could be cut by choosing
         // smaller types than int
-        int StepsPerRevolution;
-        int turnRate;  
-        int M1Pin;
-        int M2Pin;
-        int M3Pin;
-        int ResetPin;
-        int SleepPin;
-        int StepPin;
-        int EnablePin;
-        int DirPin;
-        bool TogglePin(int pin_number);
+        int stepsPerRevolution_;
+        int turnRate_;
+
+        // Pins
+        const int stepPin_;
+        const int dirPin_;
+        const int m1Pin_;
+        const int mPin_;
+        const int m3Pin_;
+        const int enablePin_;
+        const int resetPin_;
+        const int sleepPin_;
 };

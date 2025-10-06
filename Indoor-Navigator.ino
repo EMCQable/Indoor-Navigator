@@ -14,7 +14,7 @@ const short int serial_speed = 9600;
 
 ProjectWiFi projectwifi(password, ssid);
 
-ProjectStepControl stepper(1,0,0,0,0,0,stepPin,0,dirPin);
+DRV8825Controller stepper(1,0,0,0,0,0,stepPin,0,dirPin);
 
 MPU6050 imu;
 
@@ -39,7 +39,7 @@ void loop() {
   //} else { 
   // Serial.println("Disconnected.");
   //}
-  stepper.TakeStep(false);
+  stepper.takeStep(false);
 
   imu.update();
   delay(200);
