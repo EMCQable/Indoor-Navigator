@@ -3,10 +3,24 @@
 #include <cassert>
 
 DRV8825Controller::DRV8825Controller( 
-        int turnratedenominator, int m1pin, int m2pin, int m3pin,
-        int resetpin, int sleeppin, int steppin, int enablepin, int dirpin) : 
-    stepsPerRevolution_(10), m1Pin_(m1pin), mPin_(m2pin), m3Pin_(m3pin), resetPin_(resetpin),
-    sleepPin_(sleeppin), stepPin_(steppin), dirPin_(dirpin), enablePin_(enablepin) {
+        int stepResolution,
+        int m1pin,
+        int m2pin,
+        int m3pin,
+        int resetpin,
+        int sleeppin,
+        int steppin,
+        int enablepin,
+        int dirpin) : 
+        stepsPerRevolution_(10),
+        m1Pin_(m1pin),
+        mPin_(m2pin),
+        m3Pin_(m3pin),
+        resetPin_(resetpin),
+        sleepPin_(sleeppin),
+        stepPin_(steppin),
+        dirPin_(dirpin),
+        enablePin_(enablepin) {
         // set output pins
         if (m1Pin_ > 0) {
             pinMode(m1Pin_, OUTPUT);
@@ -34,11 +48,11 @@ DRV8825Controller::DRV8825Controller(
         pinMode(stepPin_, OUTPUT);
         pinMode(dirPin_, OUTPUT);
         // set the correct rate
-        bool ret = setStepMode(turnratedenominator);
+        bool ret = setStepResolution(stepResolution);
 }
 
-bool DRV8825Controller::setStepMode(int denominator) {
-        switch (denominator)
+bool DRV8825Controller::setStepResolution(int stepResolution) {
+        switch (stepResolution)
         {
             case 1:
                 if (mPin_ > 0){
@@ -180,6 +194,7 @@ void DRV8825Controller::takeStep(bool direction) {
         digitalWrite(stepPin_,LOW);
     }
 }
+
 
 bool DRV8825Controller::setStepsPerRevolution(int new_StepsPerRevolution) {
     if (new_StepsPerRevolution > 0) {
