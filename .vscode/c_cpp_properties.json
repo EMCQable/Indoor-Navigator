@@ -1,0 +1,33 @@
+{
+    "configurations": [
+        {
+            "name": "Debian",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "~/Arduino/libraries/**",
+                "~/.arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32/**",
+                "~/.arduino15/packages/esp32/hardware/esp32/3.3.0/variants/esp32/**",
+                "~/.arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-b66b5448-v1/esp32/include/**",
+                "~/.arduino15/./packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-b66b5448-v1/esp32/qio_qspi/include/**"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        },
+        {
+            "name": "Windows",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Users/${env:USERNAME}/Documents/Arduino/libraries",
+                "C:/Users/${env:USERNAME}/AppData/Local/Arduino15/packages/esp32/hardware/esp32/3.3.0/cores/esp32",
+                "C:/Users/${env:USERNAME}/AppData/Local/Arduino15/packages/esp32/hardware/esp32/3.3.0/variants/esp32",
+                "C:/Users/${env:USERNAME}/AppData/Local/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-b66b5448-v1/esp32/include",
+                "C:/Users/${env:USERNAME}/AppData/Local/Arduino15/packages/esp32/tools/esp32-arduino-libs/idf-release_v5.5-b66b5448-v1/esp32/qio_qspi/include"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
