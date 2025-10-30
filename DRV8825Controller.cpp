@@ -46,12 +46,12 @@ DRV8825Controller::DRV8825Controller(char stepResolution, char resolutionPin1, c
     bool ret = setStepResolution(stepResolution);
 }
 
-// does log2 on the resolution and then sets the pins high or low depending on bits
+// maps 1, 2, 4, 8, 16, 32 to 0, 1, 2, 3, 4, 5 and sets pins according to bits
 bool DRV8825Controller::setStepResolution(char stepResolution) {
     int pins = 0 = sizeof(int) - std::countl_zero(stepResolution) - 1;
-    digitalWrite(resolutionPin1_, pins >> 1);
-    digitalWrite(resolutionPin1_, pins >> 2);
-    digitalWrite(resolutionPin1_, pins >> 3);
+    digitalWrite(resolutionPin1_, pins & 1);
+    digitalWrite(resolutionPin2_, pins & 2);
+    digitalWrite(resolutionPin3_, pins & 4);
     return true;
 }
 
