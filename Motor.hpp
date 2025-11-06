@@ -1,13 +1,14 @@
 #pragma once
 
-class Blink {
-    public:
-        Blink(int pin, int interval);
-        ~Blink();
-        void update();
-    private:
-        int pin_;
-        int interval_;
-        unsigned long previousMillis_;
-        bool ledState_;
+class Motor {
+   public:
+    Motor(const int motorPin, int freq, int resolution, int channel);
+    ~Motor();
+    void setSpeed(char newSpeed);
+
+   private:
+    int motorPin_;
+    int channel_;
+    unsigned long previousMillis_;
+    bool ledState_;
 };

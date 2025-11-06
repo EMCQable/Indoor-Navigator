@@ -1,3 +1,4 @@
+#pragma once
 #include <Arduino.h>
 #include "WifiConnection.hpp"
 #include "DRV8825Controller.hpp"
@@ -14,7 +15,7 @@ const short int serial_speed = 9600;
 
 ProjectWiFi projectwifi(password, ssid);
 
-DRV8825Controller stepper(1,0,0,0,0,0,stepPin,0,dirPin);
+DRV8825Controller stepperController(1,0,0,0,0,0,stepPin,0,dirPin);
 
 MPU6050 imu;
 
@@ -39,7 +40,7 @@ void loop() {
   //} else { 
   // Serial.println("Disconnected.");
   //}
-  stepper.takeStep(false);
+  stepperController.setSpeed(false, 255);
 
   imu.update();
   delay(200);
