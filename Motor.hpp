@@ -3,6 +3,7 @@
 class Motor {
    public:
     Motor(const int motorPin, int freq, int resolution, int channel);
+    Motor(const int motorPin, int channel);
     ~Motor();
     void setSpeed(char newSpeed);
 

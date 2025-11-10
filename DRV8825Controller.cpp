@@ -9,6 +9,8 @@ DRV8825Controller::DRV8825Controller(char stepResolution, char resolutionPin1, c
                                      char resolutionPin3, char resetPin, char sleepPin,
                                      char motorPin, char enablePin, char dirPin, char pwmChannel)
     : motor_(motorPin, pwmChannel),
+      stepResolution_(0),
+      turnRate_(0),
       resolutionPin1_(resolutionPin1),
       resolutionPin2_(resolutionPin2),
       resolutionPin3_(resolutionPin3),
